@@ -1,3 +1,6 @@
+//states are like props almost but it is just for class components
+
+//in app.js
 import React, { Component } from "react";
 import User from "./User";
 
@@ -43,3 +46,12 @@ export default class App extends Component {
 		);
 	}
 }
+
+//in User/User.js
+import React from "react";
+
+function User(props) {
+	return <div>{props.name}</div>;
+}
+
+//export default User;

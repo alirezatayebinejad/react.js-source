@@ -82,14 +82,14 @@ function User({ name = "no name", count = "not available", children }) {
 	);
 }
 function App() {
-	const allProd = [
+	const allProps = [
 		{ name: "sony", count: 2 },
 		{ name: "hp", count: 0 },
 	];
 	return (
 		<div className="App">
-			<User {...allProd[0]}></User>
-			<User {...allProd[1]}>
+			<User {...allProps[0]}></User>
+			<User {...allProps[1]}>
 				<p>insid country ship only</p>
 			</User>
 		</div>
