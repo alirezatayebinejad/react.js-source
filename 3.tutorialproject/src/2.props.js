@@ -1,4 +1,4 @@
-//instead of creating two files app and component I write all of them in one file just for tutorial purposes
+//note:instead of creating two files app and component I write all of them in one file just for tutorial purposes
 
 //props is like attributes in html and we can customize data in our components
 
@@ -42,19 +42,19 @@ function User(props) {
 	);
 }
 
-//props destucturing: let {name,count}=props - then use name coun in jsx instead of props.name etc.
+//props destucturing: let {name,count}=props - then use name count in jsx instead of props.name etc.
 
 //spread props sending
 //in App.js file
 function App() {
-	const allProd = [
+	const allProps = [
 		{ name: "sony", count: 2 },
 		{ name: "hp", count: 0 },
 	];
 	return (
 		<div className="App">
-			<User {...allProd[0]} />
-			<User {...allProd[1]} />
+			<User {...allProps[0]} />
+			<User {...allProps[1]} />
 		</div>
 	);
 }
@@ -76,7 +76,7 @@ function User({ name = "no name", count = "not available", children }) {
 		<div>
 			<h1>
 				name:{name}-count:{count}
-				{children}//it is everything between user tag in App
+				{children} //it is everything between user tag in App
 			</h1>
 		</div>
 	);
@@ -105,18 +105,16 @@ function App() {
 	);
 }
 //in modal/modal.js
-import React, { Component } from "react";
+import React from "react";
 class Modal extends React.Component {
 	render() {
 		return (
-			<div>
-				<div className="popup">
-					<p>{this.props.message}</p>
-					<ul>
-						<li>confirm</li>
-						<li>reject</li>
-					</ul>
-				</div>
+			<div className="popup">
+				<p>{this.props.message}</p>
+				<ul>
+					<li>confirm</li>
+					<li>reject</li>
+				</ul>
 			</div>
 		);
 	}
@@ -134,14 +132,12 @@ import React, { Component } from "react";
 class Modal extends React.Component {
 	render() {
 		return (
-			<div>
-				<div className="popup">
-					<p>{this.props.message}</p>
-					<ul>
-						<li>confirm</li>
-						<li>reject</li>
-					</ul>
-				</div>
+			<div className="popup">
+				<p>{this.props.message}</p>
+				<ul>
+					<li>confirm</li>
+					<li>reject</li>
+				</ul>
 			</div>
 		);
 	}
@@ -155,6 +151,6 @@ Modal.propTypes = {
 };
 //or like
 Modal.propTypes = {
-	message: PropTypes.oneOf(["yes", "no"]), //this make the message be string for sure otherwise sends error
+	message: PropTypes.oneOf(["yes", "no"]),
 };
 //there are other things that you can find in prop types document

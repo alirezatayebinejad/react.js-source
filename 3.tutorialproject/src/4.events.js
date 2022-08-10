@@ -48,3 +48,23 @@ class Button extends Component {
 		);
 	}
 }
+
+//event params
+class Button extends Component {
+	constructor(props) {
+		super(props);
+		this.age = 12;
+	}
+	clickHandler(d, e) {
+		console.log(d); //2
+		console.log(e); //event
+	}
+	render() {
+		return (
+			<div>
+				<button onClick={this.clickHandler.bind(this, 2)}>click me</button>
+				//we bind it to make this keyword to point to this class otherwise it is udefined in the handler
+			</div>
+		);
+	}
+}
