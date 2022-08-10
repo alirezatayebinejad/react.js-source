@@ -154,3 +154,20 @@ Modal.propTypes = {
 	message: PropTypes.oneOf(["yes", "no"]),
 };
 //there are other things that you can find in prop types document
+
+//list rendering
+function App() {
+	const allProps = [
+		{ id: 0, name: "sony", count: 2 },
+		{ id: 1, name: "hp", count: 0 },
+		{ id: 2, name: "apple", count: 12 },
+	];
+	return (
+		<div className="App">
+			{allProps.map((prop) => {
+				<User {...prop} key={prop.id} />;
+				//key is a special prob that react needs and we should set it and its not for us (dont use index or random as key)
+			})}
+		</div>
+	);
+}
