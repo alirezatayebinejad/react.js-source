@@ -17,3 +17,13 @@ export default class app extends Component {
 }
 
 //functions are much better than classes unless we have to use classes sometimes
+
+//fragments
+function frag() {
+  return (
+    <React.Fragment>
+      <p>with this we dont need to use useless div tag for container</p>
+    </React.Fragment>
+    //instead of fragment we can use empty html taq like: <> </>
+  )
+}
