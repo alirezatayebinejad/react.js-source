@@ -1,6 +1,14 @@
+/*
+
+this code is usin react-bootstrap:
+1.npm install react-bootstrap bootstrap
+2.import 'bootstrap/dist/css/bootstrap.min.css'; //in app.js or in index.js
+3.import { Table, Container, Alert } from "react-bootstrap"; //import components that we use
+*/
+
 import React, { Component } from "react";
 import { Table, Container, Alert } from "react-bootstrap";
-//import 'bootstrap/dist/css/bootstrap.min.css'; //here or in index.js
+import "bootstrap/dist/css/bootstrap.min.css"; //here or in index.js
 
 export default class App extends Component {
 	constructor() {
