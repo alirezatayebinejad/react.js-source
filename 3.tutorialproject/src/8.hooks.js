@@ -1,9 +1,9 @@
 //we can not use states and lifecycle in function components
 //so we can use Hooks in function components
 
-import React from "react";
+import React, { useState } from "react";
 
-//useState hook
+//useState hook - for states in function components
 function App() {
 	const [count, setCount] = useState(0);
 	const [users, setUser] = useState([
@@ -44,3 +44,40 @@ function App() {
 }
 
 export default App;
+
+//useEffect - for lifecycle in function components
+import React, { useState, useEffect } from "react";
+
+function App() {
+	const [count, setCount] = useState(0);
+
+	useEffect(() => {
+		console.log("when component mount or updated this executes");
+	});
+	useEffect(() => {
+		console.log("just when component mount");
+	}, []);
+	useEffect(() => {
+		console.log("just when count state updates");
+	}, [count]);
+	useEffect(() => {
+		console.log("just when component mount");
+		return () => {
+			console.log("just when component unmount");
+		};
+	}, []);
+	const minusCount = () => {
+		setCount((prevCount) => prevCount - 1);
+		//setCount(count-1) better not to use this
+	};
+	const plusCount = () => {
+		setCount((prevCount) => prevCount + 1);
+	};
+	return (
+		<div>
+			<button onClick={minusCount}>-</button>
+			<h1>{count}</h1>
+			<button onClick={plusCount}>+</button>
+		</div>
+	);
+}
