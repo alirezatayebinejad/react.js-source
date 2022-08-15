@@ -62,6 +62,7 @@ function App() {
 			<Route path="/courses" element={<Courses />}></Route>
 			<Route path="/courses/:courseId" element={<MainCourse />}></Route>
 			<Route path="/users" element={<Users></Users>}></Route>
+			<Route path="*" element={<notFound></notFound>}></Route> // for 404 pages
 		</Routes>
 	);
 }
@@ -118,7 +119,105 @@ import coursesInfo from "./data";
 
 function MainCourse() {
 	let params = useParams();
-	const [courses, setPosts] = useState(coursesInfo);
+	const [courses, setcourses] = useState(coursesInfo);
 
 	return <div>mainCourse:{courses.find((course) => course.id == params.courseId).title}</div>;
+}
+
+//if we want to redirect user to home page if he add an unvalid param course id in url we use navigator
+import { useParams, Navigate } from "react-router-dom";
+import Data from "./../Datas";
+
+function MainCourse() {
+	let params = useParams();
+	const [courses, setCourses] = useState(Data);
+
+	let hasCourse = courses.some((course) => course.id == params.courseID);
+
+	console.log(hasCourse);
+
+	return <div>{!hasCourse ? <Navigate to="/" /> : <>Main course : {courses.find((course) => course.id == params.coursId).title}</>}</div>;
+}
+
+//to create subroutes we use outlet frim react-router-dom
+//in app.js
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Courses from "./courses";
+import Users from "./users";
+import Home from "./home";
+
+function App() {
+	return (
+		<Routes>
+			<Route path="/" element={<Home></Home>}></Route>
+			<Route path="/courses/*" element={<Courses />}>
+				<Route path="free" element={<h2>this is free courses page</h2>} /> {/*these two are sub routes */}
+				<Route path="pain" element={<h2>this is paid courses page</h2>} />
+			</Route>
+			<Route path="/users" element={<Users></Users>}></Route>
+		</Routes>
+	);
+}
+//then we use outlet where we want these sub routes to be shown
+//like in courses page
+import React from "react";
+import coursesInfo from "./data";
+import { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
+
+function Courses() {
+	const [courses, setCourses] = useState(coursesInfo);
+	return (
+		<div>
+			{courses.map((course) => {
+				return (
+					<div key={course.id}>
+						<Link to={`${course.id}`}>
+							<h1>{course.title}</h1>
+						</Link>
+						<hr />
+					</div>
+				);
+			})}
+			<hr />
+			<Outlet></Outlet>
+		</div>
+	);
+}
+
+//better way to use routhes: useRouthe hook
+//in routes.js
+import Courses from "./components/Courses";
+import MainCourse from "./components/MainCourse";
+import About from "./components/About/About";
+
+let routes = [
+	{ path: "/courses", element: <Courses /> },
+	{ path: "/course/:courseID", element: <MainCourse /> },
+
+	{
+		path: "/about/*",
+		element: <About />,
+		children: [
+			{ path: "setting", element: <p style={{ textAlign: "center" }}> Setting</p> },
+			{ path: "dashboard", element: <p style={{ textAlign: "center" }}>Dashboard</p> },
+		],
+	},
+];
+//in app.js
+import React from "react";
+import { useRoutes } from "react-router-dom";
+import Header from "./components/Header";
+import routes from "./routes";
+
+function App() {
+	let router = useRoutes(routes);
+
+	return (
+		<>
+			<Header />
+			{router}
+		</>
+	);
 }
