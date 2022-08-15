@@ -186,7 +186,7 @@ function Courses() {
 	);
 }
 
-//better way to use routhes: useRouthe hook
+//better way to use routhes: useRouthes hook
 //in routes.js
 import Courses from "./components/Courses";
 import MainCourse from "./components/MainCourse";
@@ -219,5 +219,95 @@ function App() {
 			<Header />
 			{router}
 		</>
+	);
+}
+
+//private routes
+//in routhes.js
+import Courses from "./components/Courses";
+import MainCourse from "./components/MainCourse";
+import About from "./components/About/About";
+import Login from "./components/Login";
+import Panel from "./components/Panel";
+import Dashboard from "./components/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
+
+let Routes = [
+	{ path: "/courses", element: <Courses /> },
+	{ path: "/course/:courseID", element: <MainCourse /> },
+	{
+		path: "/about/*",
+		element: <About />,
+		children: [
+			{ path: "setting", element: <p style={{ textAlign: "center" }}> Setting</p> },
+			{ path: "dashboard", element: <p style={{ textAlign: "center" }}>Dashboard</p> },
+		],
+	},
+	{ path: "/login", element: <Login /> },
+	{
+		path: "/*",
+		element: <PrivateRoute />,
+		children: [
+			{ path: "panel", element: <Panel /> },
+			{ path: "dashboard", element: <Dashboard /> },
+		],
+	},
+];
+//export default routes
+//in privateRoute.js
+import React from "react";
+import { isLogin } from "./../utils";
+import { Navigate, Outlet } from "react-router-dom";
+
+function Panel({ children }) {
+	let isUserLogin = isLogin("mohammad");
+
+	console.log(isUserLogin);
+
+	return <div>{isUserLogin ? <Outlet /> : <Navigate to="/login" />}</div>;
+}
+
+//useNavigate hook
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+function About() {
+	let navigate = useNavigate();
+
+	return (
+		<div>
+			<h3 style={{ textAlign: "center" }}>Welcome To About Page :))</h3>
+
+			<button
+				onClick={() => {
+					// navigate(-1) one before in history
+					navigate("/login");
+				}}
+			>
+				ثبت نام در دوره
+			</button>
+		</div>
+	);
+}
+
+//use location hook
+import React, { useState } from "react";
+import CoursesData from "./../CoursesData";
+import Course from "./Course";
+import { useLocation } from "react-router-dom";
+
+function Courses() {
+	const [courses, setCourses] = useState(CoursesData);
+
+	let location = useLocation();
+
+	console.log(location);
+
+	return (
+		<div style={{ display: "flex", justifyContent: "space-evenly", marginTop: 40 }}>
+			{courses.map((course) => (
+				<Course key={course.id} {...course} />
+			))}
+		</div>
 	);
 }
