@@ -81,3 +81,31 @@ function App() {
 		</div>
 	);
 }
+
+//create custom hooks : its just like a js function that does sth
+//create a hook in a hook folder
+import React, { useState, useEffect } from "react";
+function useUpdateLogger(title) {
+	const [value, setValue] = useState(title);
+	useEffect(() => {
+		console.log(value);
+	}, [value]);
+
+	return [value, setValue];
+}
+//export default useUpdateLogger
+//and use it anywhere
+import React, { useState, useEffect } from "react";
+import useUpdateLogger from "./hooks/useUpdateLogger";
+import "./App.css";
+
+function App() {
+	const [value, setValue] = useUpdateLogger("");
+
+	return (
+		<div className="App">
+			<input value={value} onChange={(e) => setValue(e.target.value)} />
+		</div>
+	);
+}
+//export default App;
