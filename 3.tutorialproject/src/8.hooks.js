@@ -109,3 +109,116 @@ function App() {
 	);
 }
 //export default App;
+
+//useMemo hook - when we dont want to execute a big process when every part of program updated but only a specific part
+import React, { useState, useMemo } from "react";
+
+function App() {
+	const [firstCount, setFirstCount] = useState(0);
+	const [secondCount, setSecondCount] = useState(0);
+	const [text, setText] = useState("");
+
+	const firstCounterHandler = () => {
+		setFirstCount((prevCount) => prevCount + 1);
+	};
+
+	const secondCounterHandler = () => {
+		setSecondCount((prevCount) => prevCount + 1);
+	};
+
+	const isEven = useMemo(() => {
+		let index = 0;
+		while (index < 2000000000) {
+			index++;
+		}
+
+		return firstCount % 2 === 0; //useMemo is not holding a function it is going to be true or false
+	}, [firstCount]);
+
+	return (
+		<div>
+			<button onClick={firstCounterHandler}>Add First Counter: {firstCount}</button>
+			{isEven ? "Even" : "Odd"}
+			<br />
+			<button onClick={secondCounterHandler}>Add Second Counter: {secondCount}</button>
+		</div>
+	);
+	//now that big loop is only executes for clicking the firt button
+}
+
+//useCalback - just like memo but this is for referenced types like functions and it holds function not bool
+import React, { useState, memo, useCallback } from "react";
+
+function App() {
+	const [counter, setCounter] = useState(0);
+	const [title, setTitle] = useState("");
+
+	console.log("App Run");
+	const addCounter = useCallback(() => {
+		setCounter((prevCount) => prevCount + 1);
+	}, [counter]);
+	const minusCounter = useCallback(() => {
+		setCounter((prevCount) => prevCount - 1);
+	}, [counter]);
+
+	return (
+		<div>
+			<input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+			<Title title={title} />
+			<h3>{counter}</h3>
+			<Bottons add={addCounter} minus={minusCounter} />
+		</div>
+	);
+}
+
+const Title = memo(({ title }) => {
+	console.log("title Run");
+	return <h3>{title}</h3>;
+});
+
+const Buttons = memo(({ add, minus }) => {
+	//this memo is not stop it from executing we should use useCallback
+	console.log("Buttons Run");
+	return (
+		<>
+			<button onClick={add}>add</button>
+			<button onClick={minus}>minus</button>
+		</>
+	);
+});
+
+//memo vs useMemo => they're same but memo can memoize whole component in top level but useMemo is just for a part insid the function
+
+//useRef hook - stores data like useState but it will not render the jsx again when updates
+//useRef can hold html elements like we used to getElementby... in vanilla js but in react we use useRef and Ref={refName}
+//
+import React, { useEffect, useRef } from "react";
+import "./App.css";
+
+function App() {
+	const usernameInputRef = useRef();
+	const titleRef = useRef(); //this holds an object with current property that holds the element
+
+	useEffect(() => {
+		console.log(usernameInputRef); //gives the imput tag and its properties
+		usernameInputRef.current.focus();
+	}, []);
+
+	const addNewValue = () => {
+		usernameInputRef.current.value = "SabzLearn.ir :))";
+	};
+
+	const addNewClass = () => {
+		usernameInputRef.current.classList.add("bg-red");
+		titleRef.current.classList.add("color-blue");
+	};
+
+	return (
+		<div>
+			<h3 ref={titleRef}>SabzLearn.ir</h3>
+			<input ref={usernameInputRef} type="text" placeholder="Username" />
+			<button onClick={addNewValue}>Add New Value</button>
+			<button onClick={addNewClass}>Add New Class</button>
+		</div>
+	);
+}
