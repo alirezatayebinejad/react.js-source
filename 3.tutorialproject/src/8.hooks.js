@@ -247,3 +247,64 @@ function App() {
 		</div>
 	);
 }
+
+//useContex - when we have user subuser subsubuser subsubsubuser instead of using props we use contex for sub sub sub component
+//in contex folder and usernameContex
+import { createContext, useState } from "react";
+export const UsernameContext = createContext();
+
+const UsernameProvider = ({ children }) => {
+	const [username, setUserName] = useState("Mohammad Amin");
+
+	return <UsernameContext.Provider value={username}>{children}</UsernameContext.Provider>;
+};
+//export default UsernameProvider
+//in app.js
+import React, { useState } from "react";
+import User from "./Components/User";
+import UsernameProvider from "./Contexts/UsernameContext";
+
+function App() {
+	return (
+		<UsernameProvider>
+			<div>
+				<User />
+			</div>
+		</UsernameProvider>
+	);
+}
+//export default App;
+//in user.js
+import React, { useContext } from "react";
+import SubUser from "./SubUser";
+
+import { UsernameContext } from "./../Contexts/UsernameContext";
+
+function User() {
+	const username = useContext(UsernameContext);
+
+	console.log(username);
+
+	return (
+		<div>
+			<h2>User: {username}</h2>
+			<SubUser />
+		</div>
+	);
+}
+//export default User;
+//in subsubsubuser
+import React, { useContext } from "react";
+
+import { UsernameContext } from "./../Contexts/UsernameContext";
+
+function SubSubSubUser() {
+	const username = useContext(UsernameContext);
+
+	return (
+		<div>
+			<h2>SubSubSubUser: {username}</h2>
+		</div>
+	);
+}
+//export default SubSubSubUser;
