@@ -81,6 +81,8 @@ function App() {
 		</div>
 	);
 }
+//we have useLayoutEffect => just like useEffect but sync it will finish before rendering jsx
+//when we have api call we use it but we should use useEffect for all the things we can
 
 //create custom hooks : its just like a js function that does sth
 //create a hook in a hook folder
@@ -219,6 +221,29 @@ function App() {
 			<input ref={usernameInputRef} type="text" placeholder="Username" />
 			<button onClick={addNewValue}>Add New Value</button>
 			<button onClick={addNewClass}>Add New Class</button>
+		</div>
+	);
+}
+
+//useId hook - for creating unique id in project
+import React, { useId } from "react";
+
+function App() {
+	const usernameID = useId();
+	const passwordID = useId();
+
+	console.log("UserName ID:", usernameID);
+	console.log("Password ID:", passwordID);
+
+	return (
+		<div>
+			<form action="#">
+				<label htmlFor={usernameID + "-value"}>Your Username: </label>
+				<input type="text" id={usernameID + "value"} placeholder="Username" />
+				<hr />
+				<label htmlFor={passwordID + "-value"}>Password: </label>
+				<input type="text" id={passwordID + "-value"} placeholder="Password" />
+			</form>
 		</div>
 	);
 }
