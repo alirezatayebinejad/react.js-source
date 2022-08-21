@@ -37,6 +37,6 @@ function App() {
 
 export default App;
 
-//with installation of react dev tools extention we dont need to use profiler tage
+//with installation of react dev tools extention we dont need to use profiler tags
 //we have a profiler section on inspect
 //profiler is usefull in big projects

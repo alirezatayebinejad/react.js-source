@@ -1,5 +1,5 @@
 // for creating spa(single page aplication) website
-// install routing package: npm install
+// install routing package: npm install react-router-dom
 //in index.js
 import { BrowserRouter } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -28,7 +28,7 @@ function App() {
 
 export default App;
 /*
-now we have multiple rutes that points to a component like home, courses or users
+now we have multiple routes that points to a component like home, courses or users
 domain.com/users show users component content
 */
 
@@ -62,7 +62,7 @@ function App() {
 			<Route path="/courses" element={<Courses />}></Route>
 			<Route path="/courses/:courseId" element={<MainCourse />}></Route>
 			<Route path="/users" element={<Users></Users>}></Route>
-			<Route path="*" element={<notFound></notFound>}></Route> // for 404 pages
+			<Route path="*" element={<notFound></notFound>}></Route> {/*for 404 pages*/}
 		</Routes>
 	);
 }
@@ -124,7 +124,7 @@ function MainCourse() {
 	return <div>mainCourse:{courses.find((course) => course.id == params.courseId).title}</div>;
 }
 
-//if we want to redirect user to home page if he add an unvalid param course id in url we use navigator
+//if we want to redirect user to home page if he add an invalid param course id in url we use navigator
 import { useParams, Navigate } from "react-router-dom";
 import Data from "./../Datas";
 
@@ -139,7 +139,7 @@ function MainCourse() {
 	return <div>{!hasCourse ? <Navigate to="/" /> : <>Main course : {courses.find((course) => course.id == params.coursId).title}</>}</div>;
 }
 
-//to create subroutes we use outlet frim react-router-dom
+//to create subroutes we use outlet from react-router-dom
 //in app.js
 import React from "react";
 import { Routes, Route } from "react-router-dom";
@@ -186,7 +186,7 @@ function Courses() {
 	);
 }
 
-//better way to use routhes: useRouthes hook
+//better way to use routes: useRoutes hook
 //in routes.js
 import Courses from "./components/Courses";
 import MainCourse from "./components/MainCourse";
@@ -273,11 +273,9 @@ import { useNavigate } from "react-router-dom";
 
 function About() {
 	let navigate = useNavigate();
-
 	return (
 		<div>
-			<h3 style={{ textAlign: "center" }}>Welcome To About Page :))</h3>
-
+			<h3 style={{ textAlign: "center" }}>Welcome To About Page :)) </h3>
 			<button
 				onClick={() => {
 					// navigate(-1) one before in history

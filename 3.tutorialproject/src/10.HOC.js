@@ -19,8 +19,8 @@ function CourseHoc(OriginalComponent, courseTitle, coursePrice) {
 
 	return NewComponent;
 }
-
 //export default CourseHoc;
+
 //two other component as input
 import React, { useState } from "react";
 import CourseHoc from "../HOCs/CourseHoc";

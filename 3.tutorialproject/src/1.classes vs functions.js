@@ -8,7 +8,7 @@ export default function App() {
 
 import React, { Component } from 'react'
 
-export default class app extends Component {
+export default class App extends Component {
   render() {
     return (
       <div>class</div>

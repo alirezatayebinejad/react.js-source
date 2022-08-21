@@ -3,7 +3,7 @@
 
 //mounting: 1.constructor() 2.getDerivedStateFromProps(props,state) 3.all render completed 4.componentDidMount
 /*updating: when new props or setState() => 1.getDerivedStateFromProps() => 2.shouldComponentUpdate(props,state) 
-=> 3. if 2 return true => render() =>4.getSnapshotBeforUpdate() reurn data => 5.componentDidUpdate(props,state,data) */
+=> 3. if 2 return true => render() =>4.getSnapshotBeforUpdate() return data => 5.componentDidUpdate(props,state,data) */
 //note: instead of custom writing shouldConponentUpdate we can extend the class from React.PureComponent instead of React.Component so it auto decide whether to render or not
 //unmounting: 1.componentWillUnmount()
 class app extends Component {

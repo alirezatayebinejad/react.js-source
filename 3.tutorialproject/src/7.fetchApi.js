@@ -1,6 +1,5 @@
 /*
-
-this code is usin react-bootstrap:
+this code is using react-bootstrap:
 1.npm install react-bootstrap bootstrap
 2.import 'bootstrap/dist/css/bootstrap.min.css'; //in app.js or in index.js
 3.import { Table, Container, Alert } from "react-bootstrap"; //import components that we use

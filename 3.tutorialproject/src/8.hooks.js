@@ -112,7 +112,7 @@ function App() {
 }
 //export default App;
 
-//useMemo hook - when we dont want to execute a big process when every part of program updated but only a specific part
+//useMemo hook - when we don't want to execute a big process when every part of program updated but only a specific part
 import React, { useState, useMemo } from "react";
 
 function App() {
@@ -148,7 +148,7 @@ function App() {
 	//now that big loop is only executes for clicking the firt button
 }
 
-//useCalback - just like memo but this is for referenced types like functions and it holds function not bool
+//useCallback - just like memo but this is for referenced types like functions and it holds function not bool
 import React, { useState, memo, useCallback } from "react";
 
 function App() {
@@ -202,7 +202,7 @@ function App() {
 	const titleRef = useRef(); //this holds an object with current property that holds the element
 
 	useEffect(() => {
-		console.log(usernameInputRef); //gives the imput tag and its properties
+		console.log(usernameInputRef); //gives the input tag and its properties
 		usernameInputRef.current.focus();
 	}, []);
 

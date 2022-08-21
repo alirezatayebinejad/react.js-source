@@ -43,7 +43,7 @@ class Button extends Component {
 		return (
 			<div>
 				<button onClick={this.clickHandler.bind(this)}>click me</button>
-				//we bind it to make this keyword to point to this class otherwise it is udefined in the handler
+				{/*we bind it to make this keyword to point to this class otherwise it is udefined in the handler*/}
 			</div>
 		);
 	}
@@ -63,7 +63,6 @@ class Button extends Component {
 		return (
 			<div>
 				<button onClick={this.clickHandler.bind(this, 2)}>click me</button>
-				//we bind it to make this keyword to point to this class otherwise it is udefined in the handler
 			</div>
 		);
 	}

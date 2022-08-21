@@ -1,6 +1,19 @@
-//note:instead of creating two files app and component I write all of them in one file just for tutorial purposes
+//note: instead of creating two files app and component I write all of them in one file just for tutorial purposes
 
 //props is like attributes in html and we can customize data in our components
+
+//in User/User.js file
+import React from "react";
+
+function User(props) {
+	return (
+		<div>
+			<h1>{props.name}</h1>
+			<h1>{props.count}</h1>
+		</div>
+	);
+}
+//export default User;
 
 //in App.js file
 import "./App.css";
@@ -14,21 +27,7 @@ function App() {
 		</div>
 	);
 }
-
-export default App;
-
-//in User/User.js file
-import React from "react";
-
-function User(props) {
-	return (
-		<div>
-			<h1>{props.name}</h1>
-		</div>
-	);
-}
-
-//export default User;
+//export default App;
 
 //condition props
 //in User/User.js file
@@ -76,11 +75,13 @@ function User({ name = "no name", count = "not available", children }) {
 		<div>
 			<h1>
 				name:{name}-count:{count}
-				{children} //it is everything between user tag in App
+				{children}
+				{/*it is everything between user tag in App*/}
 			</h1>
 		</div>
 	);
 }
+
 function App() {
 	const allProps = [
 		{ name: "sony", count: 2 },
@@ -123,7 +124,7 @@ Modal.defaultProps = {
 	message: "you have not been signed up",
 };
 
-//for props type validationx import prop-types library
+//for props type validation import prop-types library
 //install: npm install prop-types
 //import PropTypes from "prop-types"
 import PropTypes from "prop-types";
