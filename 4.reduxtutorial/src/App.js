@@ -1,12 +1,12 @@
-import "./App.css";
-import Counter from "./features/counter/Counter";
+import PostsList from "./features/posts/PostsList";
+import AddPostForm from "./features/posts/AddPostForm";
 
 function App() {
 	return (
-		<div className="App">
-			<h1>hello world lets learn redux🚀🔥</h1>
-			<Counter />
-		</div>
+		<main className="App">
+			<AddPostForm />
+			<PostsList />
+		</main>
 	);
 }
 
