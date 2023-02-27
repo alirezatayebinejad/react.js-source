@@ -1,5 +1,5 @@
 //to install the app run one of this commands:
-/\*
+/*
 
 npx create-next-app@latest
 
@@ -22,4 +22,4 @@ yarn create next-app --typescript
 # or
 
 pnpm create next-app --typescript
-\*/
+*/
