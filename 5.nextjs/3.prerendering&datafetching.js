@@ -248,3 +248,79 @@ export async function getStaticPaths() {
 }
 
 
+//server side rendering (SSR) - executes on request time - codes will run in server side - slower than static rendering - good when you want data to be updated all the time
+
+//in news/index.js
+function NewsArticleList({ articles }) {
+    return (
+        <>
+            <h1>List of News Articles</h1>
+            {articles.map(article => {
+                return (
+                    <div key={article.id}>
+                        <h2>
+                            {article.id} {article.title} | {article.category}
+                        </h2>
+                        <hr />
+                    </div>
+                )
+            })}
+        </>
+    )
+}
+//export default NewsArticleList
+
+export async function getServerSideProps() {
+    console.log('Pre-rendering NewsArticleList')
+    const response = await fetch('http://localhost:4000/news')
+    const data = await response.json()
+
+    return {
+        props: {
+            articles: data
+        }
+    }
+}
+
+//in news/[category].js
+
+function ArticleListByCategory({ articles, category }) {
+    return (
+        <>
+            <h1>Showing news for category "{category}"</h1>
+            {articles.map(article => {
+                return (
+                    <div key={article.id}>
+                        <h2>
+                            {article.id} {article.title}
+                        </h2>
+                        <p>{article.description}</p>
+                        <hr />
+                    </div>
+                )
+            })}
+        </>
+    )
+}
+//export default ArticleListByCategory
+
+export async function getServerSideProps(context) {
+    const { params, req, res, query } = context
+    const { category } = params
+    const response = await fetch(
+        `http://localhost:4000/news?category=${category}`
+    )
+    const data = await response.json()
+
+    console.log(`Pre-rendering News Articles for category ${category}`)
+    res.setHeader('Set-Cookie', ['name=Vishwas'])
+    console.log(req.headers.cookie)
+    console.log(query)
+    return {
+        props: {
+            articles: data,
+            category
+        }
+    }
+}
+
