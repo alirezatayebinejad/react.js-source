@@ -324,3 +324,113 @@ export async function getServerSideProps(context) {
     }
 }
 
+//client side data fetching - when seo is not important or in components that we can not use ssr 
+
+import { useState, useEffect } from 'react'
+
+function Dashboard() {
+    const [isLoading, setIsLoading] = useState(true)
+    const [dashboardData, setDashboardData] = useState(null)
+    useEffect(() => {
+        async function fetchDashboardData() {
+            const response = await fetch('http://localhost:4000/dashboard')
+            const data = await response.json()
+            setDashboardData(data)
+            setIsLoading(false)
+        }
+        fetchDashboardData()
+    }, [])
+
+    if (isLoading) {
+        return <h2>Loading...</h2>
+    }
+
+    return (
+        <div>
+            <h2>Dashboard</h2>
+            <h2>Posts - {dashboardData.posts}</h2>
+            <h2>Likes - {dashboardData.likes}</h2>
+            <h2>Followers - {dashboardData.followers}</h2>
+            <h2>Following - {dashboardData.following}</h2>
+        </div>
+    )
+}
+//export default Dashboard
+
+
+//SWR package for client side data fetching - more features like auto update UI when data changes
+
+import useSWR from 'swr'
+
+const fetcher = async () => {
+    const response = await fetch('http://localhost:4000/dashboard')
+    const data = await response.json()
+    return data
+}
+
+function DashboardSWR() {
+    const { data, error } = useSWR('dashboard', fetcher)
+
+    if (error) return 'An error has occurred.'
+    if (!data) return 'Loading...'
+
+    return (
+        <div>
+            <h2>SWR Dashboard</h2>
+            <h2>Posts - {data.posts}</h2>
+            <h2>Likes - {data.likes}</h2>
+            <h2>Followers - {data.followers}</h2>
+            <h2>Following - {data.following}</h2>
+        </div>
+    )
+}
+//export default DashboardSWR
+
+//serverside rendering and clientside rendering combined
+
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+
+function EventList({ eventList }) {
+    const [events, setEvents] = useState(eventList)
+    const router = useRouter()
+
+    const fetchSportsEvents = async () => {
+        const response = await fetch('http://localhost:4000/events?category=sports')
+        const data = await response.json()
+        setEvents(data)
+        router.push('/events?category=sports', undefined, { shallow: true })
+    }
+    return (
+        <>
+            <button onClick={fetchSportsEvents}>Sports Events</button>
+            <h1>List of events</h1>
+            {events.map(event => {
+                return (
+                    <div key={event.id}>
+                        <h2>
+                            {event.id} {event.title} {event.date} | {event.category}
+                        </h2>
+                        <p>{event.description}</p>
+                        <hr />
+                    </div>
+                )
+            })}
+        </>
+    )
+}
+//export default EventList
+
+export async function getServerSideProps(context) {
+    const { query } = context
+    const { category } = query
+    const queryString = category ? 'category=sports' : ''
+    const response = await fetch(`http://localhost:4000/events?${queryString}`)
+    const data = await response.json()
+
+    return {
+        props: {
+            eventList: data
+        }
+    }
+}
