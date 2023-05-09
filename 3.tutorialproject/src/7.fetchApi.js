@@ -57,3 +57,36 @@ export default class App extends Component {
 		);
 	}
 }
+
+import { useState, useEffect } from "react"
+import axios from "axios"
+
+function App() {
+	const [posts, setPosts] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await axios.get("https://jsonplaceholder.typicode.com/posts")
+			console.log(response);
+			setPosts(response.data)
+		}
+		fetchData();
+	}, [])
+	console.log(posts);
+	return (
+		<div className="App">
+			{posts.length > 0 ?
+				<div className="posts">
+					{posts?.map((post) =>
+						<div key={post.id}>
+							<h2>{post.title}</h2>
+						</div>
+					)}
+				</div> :
+				<h1>loading...</h1>
+			}
+
+		</div>
+	);
+}
+
